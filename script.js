@@ -41,112 +41,40 @@ function login() {
 }
 
 var currentPage = 1;
-var rowsPerPage = 7;
+var rowsPerPage = { 'calendar': 6, 'report-table': 10 };
 
-function generateCalendar() {
-    var today = new Date();
-    var currentMonth = today.getMonth();
-    var currentYear = today.getFullYear();
-    var daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-  
-    var calendarBody = document.querySelector("#calendar tbody");
-    var monthYearLabel = document.getElementById("current-month-year");
-    monthYearLabel.textContent =
-      today.toLocaleString("default", { month: "long" }) + " " + currentYear;
-  
-    for (var day = 1; day <= daysInMonth; day++) {
-      (function (currentDay) {
-        // IIFE to capture the current day
-        var date = new Date(currentYear, currentMonth, currentDay); // Create a new date object for the current day
-        var dayOfWeek = date.toLocaleString("default", { weekday: "short" }); // Get the short name of the day
-  
-        var row = document.createElement("tr");
-  
-        // Add day of the week cell
-        var dayCell = document.createElement("td");
-        dayCell.textContent = dayOfWeek;
-        row.appendChild(dayCell);
-        // Add date cell
-        var dateCell = document.createElement("td");
-        dateCell.textContent = currentDay;
-        row.appendChild(dateCell);
-  
-        // Status cell and button as before
-        var statusCell = document.createElement("td");
-        statusCell.colSpan = "2"; // Span across 'Present' and 'Absent' columns
-        var statusButton = document.createElement("button");
-        statusButton.textContent = "Absent"; // Default status
-        statusButton.classList.add("absent"); // Add class for styling
-        statusButton.onclick = function () {
-          // Toggle status on click
-          if (statusButton.textContent === "Absent") {
-            statusButton.textContent = "Present";
-            statusButton.classList.remove("absent");
-            statusButton.classList.add("present");
-            markAttendance(currentDay, "present");
-            statusButton.style.backgroundColor= "#4CAF50";
-          } else {
-            statusButton.textContent = "Absent";
-            statusButton.classList.remove("present");
-            statusButton.classList.add("absent");
-            markAttendance(currentDay, "absent");
-            statusButton.style.backgroundColor= "red";
-          }
-        };
-        statusCell.appendChild(statusButton);
-        row.appendChild(statusCell);
-  
-        calendarBody.appendChild(row);
-      })(day);
-    }
-  
-    // After generating the calendar, call paginate to show the first page
-    paginate();
-  }
-  
-
-// Call this function when the user logs in successfully
-generateCalendar();
-
-function paginate() {
-  var table = document
-    .getElementById("calendar")
-    .getElementsByTagName("tbody")[0];
-  var rows = table.getElementsByTagName("tr");
-  var totalPages = Math.ceil(rows.length / rowsPerPage);
+function paginate(tableId) {
+  var table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+  var rows = table.getElementsByTagName('tr');
+  var totalPages = Math.ceil(rows.length / rowsPerPage[tableId]);
 
   // Hide all rows
   for (var i = 0; i < rows.length; i++) {
-    rows[i].style.display = "none";
+    rows[i].style.display = 'none';
   }
 
   // Show the rows for the current page
-  var start = (currentPage - 1) * rowsPerPage;
-  var end = start + rowsPerPage;
+  var start = (currentPage - 1) * rowsPerPage[tableId];
+  var end = start + rowsPerPage[tableId];
   for (var i = start; i < rows.length && i < end; i++) {
-    rows[i].style.display = "";
+    rows[i].style.display = '';
   }
 
   // Update the page information
-  document.getElementById("page-info").textContent =
-     currentPage + " of " + totalPages;
-
-      
+  document.getElementById(tableId + '-page-info').textContent = currentPage + ' of ' + totalPages;
 }
 
-function changePage(step) {
-  var table = document
-    .getElementById("calendar")
-    .getElementsByTagName("tbody")[0];
-  var rows = table.getElementsByTagName("tr");
-  var totalPages = Math.ceil(rows.length / rowsPerPage);
+function changePage(step, tableId) {
+  var table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+  var rows = table.getElementsByTagName('tr');
+  var totalPages = Math.ceil(rows.length / rowsPerPage[tableId]);
 
   // Update the current page
   currentPage += step;
   currentPage = Math.max(1, Math.min(currentPage, totalPages)); // Clamp between 1 and totalPages
 
   // Update the table for the new page
-  paginate();
+  paginate(tableId);
 }
 
 function markAttendance(day, status) {
@@ -164,6 +92,8 @@ function markAttendance(day, status) {
   console.log("Attendance for " + date + " marked as " + status);
 }
 
+
+// this function  is used for Generate Report
 function generateReport() {
   var today = new Date();
   var currentMonth = today.getMonth();
@@ -172,29 +102,53 @@ function generateReport() {
 
   var presentCount = 0;
   var absentCount = 0;
-  var reportContent = "Date\t\tStatus\n";
+
+  // Get or create the tbody for the report table
+  var reportTable = document.getElementById('report-table');
+  var reportTableBody = reportTable.getElementsByTagName('tbody')[0];
+  if (!reportTableBody) {
+    reportTableBody = document.createElement('tbody');
+    reportTable.appendChild(reportTableBody);
+  } else {
+    reportTableBody.innerHTML = ''; // Clear existing rows if tbody already exists
+  }
 
   for (var day = 1; day <= daysInMonth; day++) {
-    var date = day + "-" + (currentMonth + 1) + "-" + currentYear;
-    var attendanceRecord = attendanceData.find(
-      (record) => record.date === date
-    );
+    var date = new Date(currentYear, currentMonth, day);
+    var dateString = day + "-" + (currentMonth + 1) + "-" + currentYear;
+    var dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+    var attendanceRecord = attendanceData.find(record => record.date === dateString);
+
+    var row = document.createElement('tr');
+    row.innerHTML = '<td>' + dayName + '</td><td>' + dateString + '</td><td>' +
+                    (attendanceRecord && attendanceRecord.status === "present" ? "Present" : "Absent") + '</td>';
+    reportTableBody.appendChild(row);
 
     if (attendanceRecord && attendanceRecord.status === "present") {
-      reportContent += date + "\t\tPresent\n";
       presentCount++;
     } else {
-      reportContent += date + "\t\tAbsent\n";
       absentCount++;
     }
   }
 
-  reportContent +=
-    "\nTotal Present: " + presentCount + "\nTotal Absent: " + absentCount;
+  // Display Total Summary
+  var presentTotal = document.getElementById('present-count');
+  var absentTotal = document.getElementById('absent-count');
+  presentTotal.innerHTML = presentCount;
+  absentTotal.innerHTML = absentCount;
 
-  // Display the report in the UI
-  var reportSection = document.getElementById("report-section");
-  var attendanceReport = document.getElementById("attendance-report");
-  attendanceReport.textContent = reportContent;
-  reportSection.style.display = "block";
+  // Display the report section
+  var reportSection = document.getElementById('report-section');
+  reportSection.style.display = 'block';
+  document.getElementById("attendance-section").style.display = "none";
+
+  // Ensure currentPage is reset to 1 when generating a new report
+  currentPage = 1;
+  paginate('report-table');
 }
+
+function printReport() {
+  window.print();
+}
+
+

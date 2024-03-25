@@ -1,0 +1,10 @@
+@media print {
+    /* Your print styles go here */
+    body {
+      color: black;
+    }
+    /* Hide elements not needed for the print report */
+    .no-print {
+      display: none;
+    }
+  }

@@ -1,71 +1,71 @@
 /* Import Google font - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
-body{
+body {
   min-height: 100vh;
   width: 100%;
 }
 
-.container-main{
+.container-main {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   max-width: 430px;
   width: 100%;
   background: #fff;
   border-radius: 7px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-  /* display: none; */
-}
-.container-main .registration{
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   display: none;
 }
-#check:checked ~ .registration{
+.container-main .registration {
+  display: none;
+}
+#check:checked ~ .registration {
   display: block;
 }
-#check:checked ~ .login{
+#check:checked ~ .login {
   display: none;
 }
-#check{
+#check {
   display: none;
 }
-.container-main .form{
+.container-main .form {
   padding: 2rem;
 }
-.form header{
+.form header {
   font-size: 2rem;
   font-weight: 500;
   text-align: center;
   margin-bottom: 1.5rem;
 }
- .form input{
-   height: 60px;
-   width: 100%;
-   padding: 0 15px;
-   font-size: 17px;
-   margin-bottom: 1.3rem;
-   border: 1px solid #ddd;
-   border-radius: 6px;
-   outline: none;
- }
- .form input:focus{
-   box-shadow: 0 1px 0 rgba(0,0,0,0.2);
- }
-.form a{
+.form input {
+  height: 60px;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 17px;
+  margin-bottom: 1.3rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+.form input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+.form a {
   font-size: 16px;
   color: #009579;
   text-decoration: none;
 }
-.form a:hover{
+.form a:hover {
   text-decoration: underline;
 }
-.form input.button{
+.form input.button {
   color: #fff;
   background: #009579;
   font-size: 1.2rem;
@@ -75,54 +75,69 @@ body{
   cursor: pointer;
   transition: 0.4s;
 }
-.form input.button:hover{
+.form input.button:hover {
   background: #006653;
 }
-.signup{
+.signup {
   font-size: 17px;
   text-align: center;
 }
-.signup label{
+.signup label {
   color: #009579;
   cursor: pointer;
 }
-.signup label:hover{
+.signup label:hover {
   text-decoration: underline;
 }
 
-.custom-table {
-    border-radius: 8px; /* Adjust the value as needed */
-    /* overflow: hidden;  */
+#attendance-section{
+  width: 320px;
+  margin:30px auto;
+  text-align: center;
 }
-
-#attendance-section {
-    width: 300px;
-    margin: 50px auto;
+.report-section{
+    width: 320px;
+    margin:30px auto;
     text-align: center;
 }
-
-input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
 }
 
 button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    /* background-color: #4CAF50; */
-    background-color: red;
-    color: white;
-    border: none;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  /* background-color: #4CAF50; */
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 button:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
-table,td,th{
-    border: 1px solid black;
-    border-collapse: collapse;
+table,
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
+
+.header {
+  background-color: #009579;
+  padding: 5px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.month {
+  width: 250px;
+  margin: auto;
+  font-weight: bold;
+}
+
