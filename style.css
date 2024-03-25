@@ -92,7 +92,12 @@ body{
 
 .custom-table {
     border-radius: 8px; /* Adjust the value as needed */
-/*     overflow: hidden; /* 
+    /* overflow: hidden;  */
+}
+.sunday {
+    background-color: red; /* Or any shade of red you prefer */
+  }
+  
 #attendance-section {
     width: 300px;
     margin: 50px auto;
