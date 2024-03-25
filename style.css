@@ -92,8 +92,7 @@ body{
 
 .custom-table {
     border-radius: 8px; /* Adjust the value as needed */
-    overflow: hidden; /* Ensures the border radius is applied correctly */
-}
+/*     overflow: hidden; /* 
 #attendance-section {
     width: 300px;
     margin: 50px auto;
