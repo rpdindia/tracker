@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="container" id="login-section">
+    <div class="container-main" id="login-section">
         <input type="checkbox" id="check">
         <div class="login form">
             <header>Login</header>
@@ -40,13 +40,12 @@
         </div>
     </div>
 
-
-    <div id="attendance-section" style="display:block;">
+    <div id="attendance-section" style="display:none;">
         <h2>Attendance for <span id="current-month-year"></span></h2>
         <button onclick="generateReport()">generate</button>
         <div class="table-responsive mt-3 ">
-            <table id="calendar" class="table custom-table align-middle table-bordered border-dark" >
-                <thead class="table-success table-bordered border-dark" >
+            <table id="calendar" class="table custom-table align-middle table-bordered border-dark ">
+                <thead class="table-success table-bordered border-dark">
                     <tr>
                         <th>Day</th>
                         <th>Date</th>
@@ -59,17 +58,17 @@
             </table>
         </div>
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="page-item ">
-                <a class="page-link" role="button" onclick="changePage(-1)">Previous</a>
-              </li>
-              <li class="page-item "><span id="page-info" class="page-link"></span></li>
-              
-              <li class="page-item">
-                <a class="page-link" role="button" onclick="changePage(1)">Next</a>
-              </li>
+            <ul class="pagination justify-content-center ">
+                <li class="page-item border border-primary rounded-start">
+                    <a class="page-link" role="button" onclick="changePage(-1)">Previous</a>
+                </li>
+                <li class="page-item border border-primary "><span id="page-info" class="page-link"></span></li>
+
+                <li class="page-item border border-primary rounded-end">
+                    <a class="page-link" role="button" onclick="changePage(1)">Next</a>
+                </li>
             </ul>
-          </nav>
+        </nav>
     </div>
 
 

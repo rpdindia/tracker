@@ -32,7 +32,6 @@ function login() {
 
   var username = document.getElementById("username").value;
   var password = document.getElementById("password").value;
-
   if (username === storedUsername && password === storedPassword) {
     document.getElementById("login-section").style.display = "none";
     document.getElementById("attendance-section").style.display = "block";
@@ -85,11 +84,13 @@ function generateCalendar() {
             statusButton.classList.remove("absent");
             statusButton.classList.add("present");
             markAttendance(currentDay, "present");
+            statusButton.style.backgroundColor= "#4CAF50";
           } else {
             statusButton.textContent = "Absent";
             statusButton.classList.remove("present");
             statusButton.classList.add("absent");
             markAttendance(currentDay, "absent");
+            statusButton.style.backgroundColor= "red";
           }
         };
         statusCell.appendChild(statusButton);
