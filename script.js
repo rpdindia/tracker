@@ -120,7 +120,7 @@ function generateReport() {
     var attendanceRecord = attendanceData.find(record => record.date === dateString);
 
     var row = document.createElement('tr');
-    row.innerHTML = '<td>' + dayName + '</td><td>' + dateString + '</td><td>' +
+    row.innerHTML = '<td class="text-start">' + dayName + '</td><td>' + dateString + '</td><td>' +
                     (attendanceRecord && attendanceRecord.status === "present" ? "Present" : "Absent") + '</td>';
     reportTableBody.appendChild(row);
 
